@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <ros/ros.h>
 #include <random>
+#include <botan/system_rng.h>
 
 namespace bsm_generator
 {
@@ -40,12 +41,16 @@ namespace bsm_generator
         // need to change ID every 5 mins
         ros::Duration id_timeout(60 * 5);
 
-        std::default_random_engine generator;
-        std::uniform_int_distribution<int> dis(0,INT_MAX);
+        //std::default_random_engine generator;
+        //std::uniform_int_distribution<int> dis(0,INT_MAX);
+        uint8_t random_chars[10];
+        Botan::System_RNG system;
+        system.randomize(random_chars, INT_MAX); // Compliant
 
         if(now - last_id_generation_time_ >= id_timeout)
         {
-            random_id_ = dis(generator);
+            random_id_ = random_chars;
+            ROS_WARN_STREAM(random_id_);
             last_id_generation_time_ = now;
         }
         for(int i = 0; i < id.size(); ++i)

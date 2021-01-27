@@ -39,6 +39,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system)
 
+find_library(Botan_LIBRARIES REQUIRED
+ NAMES Botan
+)
+
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -55,6 +59,7 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
+  ${Botan_INCLUDE_DIRS}
   include
 )
 
@@ -66,7 +71,7 @@ add_executable( ${PROJECT_NAME}
   src/bsm_generator_worker.cpp
   src/main.cpp)
 add_library(bsm_generator_worker_library src/bsm_generator_worker.cpp)
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${Botan_LIBRARIES})
 add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 add_dependencies(bsm_generator_worker_library ${catkin_EXPORTED_TARGETS})
 
