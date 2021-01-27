@@ -39,9 +39,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system)
 
-find_library(Botan_LIBRARIES REQUIRED
- NAMES Botan
-)
+list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_SOURCE_DIR}/cmake-3.5)
+find_package(Botan REQUIRED)
 
 ###################################
 ## catkin specific configuration ##
